@@ -61,34 +61,34 @@ function App:on_init_game()
         doublenickel.enums.WindowFlags.Windowed,
         doublenickel.enums.WindowFlags.Border
       ),
-      icon = doublenickel.ffi.dn_paths_resolve_format('dn_image', 'logo/icon.png'):to_interned(),
+      icon = dn.paths_resolve_format('dn_image', 'logo/icon.png'):to_interned(),
     }),
     audio = AudioConfig:new({
       dirs = {
-        doublenickel.ffi.dn_paths_resolve('audio'):to_interned()
+        dn.paths_resolve('audio'):to_interned()
       },
     }),
     font = FontConfig:new({
       fonts = {
         {
           id = Font.Tiny5,
-          file_path = doublenickel.ffi.dn_paths_resolve_format('font', 'Tiny5-Regular.ttf'):to_interned(),
+          file_path = dn.paths_resolve_format('font', 'Tiny5-Regular.ttf'):to_interned(),
           sizes = { 16, 24, 32 },
           imgui = false
         },
       }
     }),
   gpu = GpuConfig:new({
-      shader_path = doublenickel.ffi.dn_paths_resolve('shaders'):to_interned(),
+      shader_path = dn.paths_resolve('shaders'):to_interned(),
       search_paths = {
-          doublenickel.ffi.dn_paths_resolve('shader_includes'):to_interned()
+          dn.paths_resolve('shader_includes'):to_interned()
       },
       shaders = {
         {
           name = Shader.Sample,
           kind = GpuShaderKind.Graphics,
-          vertex_shader = doublenickel.ffi.dn_paths_resolve_format('shader', 'shader.vertex'):to_interned(),
-          fragment_shader = doublenickel.ffi.dn_paths_resolve_format('shader', 'shader.fragment'):to_interned(),
+          vertex_shader = dn.paths_resolve_format('shader', 'shader.vertex'):to_interned(),
+          fragment_shader = dn.paths_resolve_format('shader', 'shader.fragment'):to_interned(),
         }
       },
       render_targets = {
@@ -107,7 +107,7 @@ function App:on_init_game()
     })
   })
 
-  doublenickel.ffi.dn_app_configure(dn_config)
+  dn.app_configure(dn_config)
 
   doublenickel.asset.register_cast(RenderTarget, 'dn_gpu_render_target_t')
   doublenickel.asset.register_cast(Shader, 'dn_gpu_shader_t')
@@ -115,9 +115,9 @@ function App:on_init_game()
   -- doublenickel.gpu.build(doublenickel.module.read_from_named_path('gpu_info'))
 
   self.sdf_renderer = ffi.new('dn_sdf_renderer_t [1]');
-  self.sdf_renderer = doublenickel.ffi.dn_sdf_renderer_create(1024 * 1024)
+  self.sdf_renderer = dn.sdf_renderer_create(1024 * 1024)
 
-  self.command_buffer = doublenickel.ffi.dn_gpu_command_buffer_create(GpuCommandBufferDescriptor:new({
+  self.command_buffer = dn.gpu_command_buffer_create(GpuCommandBufferDescriptor:new({
     max_commands = 1024
   }))
 
@@ -154,14 +154,14 @@ function App:on_start_game()
 end
 
 function App:on_scene_rendered()
-  doublenickel.ffi.dn_gpu_begin_render_pass(self.command_buffer, self.render_pass)
-  doublenickel.ffi.dn_gpu_set_world_space(self.command_buffer, true)
-  doublenickel.ffi.dn_gpu_set_camera(self.command_buffer, doublenickel.editor.find('EditorCamera').offset:to_ctype())
-  doublenickel.ffi.dn_sdf_renderer_draw(self.sdf_renderer, self.command_buffer)
-  doublenickel.ffi.dn_gpu_end_render_pass(self.command_buffer)
-  doublenickel.ffi.dn_gpu_command_buffer_submit(self.command_buffer)
+  dn.gpu_begin_render_pass(self.command_buffer, self.render_pass)
+  dn.gpu_set_world_space(self.command_buffer, true)
+  dn.gpu_set_camera(self.command_buffer, doublenickel.editor.find('EditorCamera').offset:to_ctype())
+  dn.sdf_renderer_draw(self.sdf_renderer, self.command_buffer)
+  dn.gpu_end_render_pass(self.command_buffer)
+  dn.gpu_command_buffer_submit(self.command_buffer)
 
-  doublenickel.ffi.dn_gpu_render_target_blit(
+  dn.gpu_render_target_blit(
     doublenickel.asset.find(RenderTarget.Native),
     doublenickel.asset.find(RenderTarget.Upscaled)
   )
