@@ -169,6 +169,5 @@ end
 
 function App:on_swapchain_ready()
   imgui.Imgui_Impl_glfw_opengl3:Render()
-  -- doublenickel.ffi.render_imgui()
 end
 
