@@ -1,0 +1,3 @@
+[submodule "thirdparty/doublenickel"]
+	path = thirdparty/doublenickel
+	url = git@github.com:spaderthomas/doublenickel.git
