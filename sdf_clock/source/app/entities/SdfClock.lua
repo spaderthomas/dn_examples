@@ -107,9 +107,9 @@ function SdfClock:draw()
 
   self.sdf:combination_append(
     self.header,
-    ffi.C.SDF_SHAPE_RING, 
-    ffi.C.SDF_COMBINE_OP_UNION,
-    ffi.C.SDF_SMOOTH_KERNEL_POLYNOMIAL_QUADRATIC
+    ffi.C.DN_SDF_SHAPE_RING, 
+    ffi.C.DN_SDF_COMBINE_OP_UNION,
+    ffi.C.DN_SDF_SMOOTH_KERNEL_POLYNOMIAL_QUADRATIC
   )
 
   self.sdf:ring_ex(
@@ -147,9 +147,9 @@ function SdfClock:draw_hand(turns, hand_size, color)
   
   self.sdf:combination_append(
     self.header,
-    ffi.C.SDF_SHAPE_ORIENTED_BOX, 
-    ffi.C.SDF_COMBINE_OP_UNION,
-    ffi.C.SDF_SMOOTH_KERNEL_POLYNOMIAL_QUADRATIC
+    ffi.C.DN_SDF_SHAPE_ORIENTED_BOX, 
+    ffi.C.DN_SDF_COMBINE_OP_UNION,
+    ffi.C.DN_SDF_SMOOTH_KERNEL_POLYNOMIAL_QUADRATIC
   )
 
   self.sdf:oriented_box_ex(
@@ -180,9 +180,9 @@ function SdfClock:draw_bubbles()
   for bubble in self.bubbles:iterate_values() do
     self.sdf:combination_append(
       self.header,
-      ffi.C.SDF_SHAPE_CIRCLE, 
-      ffi.C.SDF_COMBINE_OP_UNION,
-      ffi.C.SDF_SMOOTH_KERNEL_POLYNOMIAL_QUADRATIC
+      ffi.C.DN_SDF_SHAPE_CIRCLE, 
+      ffi.C.DN_SDF_COMBINE_OP_UNION,
+      ffi.C.DN_SDF_SMOOTH_KERNEL_POLYNOMIAL_QUADRATIC
     )
 
     local sdf = bubble.sdf
