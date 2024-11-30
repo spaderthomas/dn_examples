@@ -1,4 +1,4 @@
-Resolution = tdengine.enum.define(
+Resolution = doublenickel.enum.define(
   'Resolution', 
   {
     Native = 0,
@@ -6,7 +6,7 @@ Resolution = tdengine.enum.define(
   }
 )
 
-Shader = tdengine.enum.define(
+Shader = doublenickel.enum.define(
   'Shader',
   {
     Sample = 0,
@@ -20,7 +20,7 @@ Shader = tdengine.enum.define(
   }
 )
 
-Font = tdengine.enum.define(
+Font = doublenickel.enum.define(
   'Font',
   {
     Tiny5 = 0,
@@ -28,7 +28,7 @@ Font = tdengine.enum.define(
 )
 
 
-RenderTarget = tdengine.enum.define(
+RenderTarget = doublenickel.enum.define(
   'RenderTarget',
   {
     Native = 0,
@@ -36,7 +36,7 @@ RenderTarget = tdengine.enum.define(
   }
 )
 
-Buffer = tdengine.enum.define(
+Buffer = doublenickel.enum.define(
   'Buffer',
   {
     Lights = 0,
@@ -44,11 +44,11 @@ Buffer = tdengine.enum.define(
 )
 
 
-local App = tdengine.define_app()
+local App = doublenickel.define_app()
 
 function App:init()
-  self.native_resolution = tdengine.vec2(320, 180)
-  self.output_resolution = tdengine.vec2(1024, 576)
+  self.native_resolution = doublenickel.vec2(320, 180)
+  self.output_resolution = doublenickel.vec2(1024, 576)
 end
 
 function App:on_init_game()
@@ -57,38 +57,38 @@ function App:on_init_game()
     window = WindowConfig:new({
       title = 'SDF Clock',
       native_resolution = Vector2:new(320, 180),
-      flags = tdengine.enum.bitwise_or(
-        tdengine.enums.WindowFlags.Windowed,
-        tdengine.enums.WindowFlags.Border
+      flags = doublenickel.enum.bitwise_or(
+        doublenickel.enums.WindowFlags.Windowed,
+        doublenickel.enums.WindowFlags.Border
       ),
-      icon = tdengine.ffi.dn_paths_resolve_format('dn_image', 'logo/icon.png'):to_interned(),
+      icon = doublenickel.ffi.dn_paths_resolve_format('dn_image', 'logo/icon.png'):to_interned(),
     }),
     audio = AudioConfig:new({
       dirs = {
-        tdengine.ffi.dn_paths_resolve('audio'):to_interned()
+        doublenickel.ffi.dn_paths_resolve('audio'):to_interned()
       },
     }),
     font = FontConfig:new({
       fonts = {
         {
           id = Font.Tiny5,
-          file_path = tdengine.ffi.dn_paths_resolve_format('font', 'Tiny5-Regular.ttf'):to_interned(),
+          file_path = doublenickel.ffi.dn_paths_resolve_format('font', 'Tiny5-Regular.ttf'):to_interned(),
           sizes = { 16, 24, 32 },
           imgui = false
         },
       }
     }),
   gpu = GpuConfig:new({
-      shader_path = tdengine.ffi.dn_paths_resolve('shaders'):to_interned(),
+      shader_path = doublenickel.ffi.dn_paths_resolve('shaders'):to_interned(),
       search_paths = {
-          tdengine.ffi.dn_paths_resolve('shader_includes'):to_interned()
+          doublenickel.ffi.dn_paths_resolve('shader_includes'):to_interned()
       },
       shaders = {
         {
           name = Shader.Sample,
           kind = GpuShaderKind.Graphics,
-          vertex_shader = tdengine.ffi.dn_paths_resolve_format('shader', 'shader.vertex'):to_interned(),
-          fragment_shader = tdengine.ffi.dn_paths_resolve_format('shader', 'shader.fragment'):to_interned(),
+          vertex_shader = doublenickel.ffi.dn_paths_resolve_format('shader', 'shader.vertex'):to_interned(),
+          fragment_shader = doublenickel.ffi.dn_paths_resolve_format('shader', 'shader.fragment'):to_interned(),
         }
       },
       render_targets = {
@@ -107,17 +107,17 @@ function App:on_init_game()
     })
   })
 
-  tdengine.ffi.dn_app_configure(dn_config)
+  doublenickel.ffi.dn_app_configure(dn_config)
 
-  tdengine.asset.register_cast(RenderTarget, 'dn_gpu_render_target_t')
-  tdengine.asset.register_cast(Shader, 'dn_gpu_shader_t')
+  doublenickel.asset.register_cast(RenderTarget, 'dn_gpu_render_target_t')
+  doublenickel.asset.register_cast(Shader, 'dn_gpu_shader_t')
 
-  -- tdengine.gpu.build(tdengine.module.read_from_named_path('gpu_info'))
+  -- doublenickel.gpu.build(doublenickel.module.read_from_named_path('gpu_info'))
 
   self.sdf_renderer = ffi.new('dn_sdf_renderer_t [1]');
-  self.sdf_renderer = tdengine.ffi.dn_sdf_renderer_create(1024 * 1024)
+  self.sdf_renderer = doublenickel.ffi.dn_sdf_renderer_create(1024 * 1024)
 
-  self.command_buffer = tdengine.ffi.dn_gpu_command_buffer_create(GpuCommandBufferDescriptor:new({
+  self.command_buffer = doublenickel.ffi.dn_gpu_command_buffer_create(GpuCommandBufferDescriptor:new({
     max_commands = 1024
   }))
 
@@ -130,7 +130,7 @@ function App:on_init_game()
 end
 
 function App:on_start_game()
-  tdengine.editor.configure(EditorConfig:new({
+  doublenickel.editor.configure(EditorConfig:new({
     grid_enabled = false,
     grid_size = 12,
     hide_dialogue_editor = true,
@@ -138,13 +138,13 @@ function App:on_start_game()
       GameView:new(
         'Native View',
         RenderTarget.Native,
-        tdengine.enums.GameViewSize.ExactSize, self.native_resolution,
-        tdengine.enums.GameViewPriority.Main),
+        doublenickel.enums.GameViewSize.ExactSize, self.native_resolution,
+        doublenickel.enums.GameViewPriority.Main),
       GameView:new(
         'Upscaled View',
         RenderTarget.Upscaled,
-        tdengine.enums.GameViewSize.ExactSize, self.output_resolution,
-        tdengine.enums.GameViewPriority.Standard)
+        doublenickel.enums.GameViewSize.ExactSize, self.output_resolution,
+        doublenickel.enums.GameViewPriority.Standard)
     },
     scene = 'sdf_clock',
     layout = 'sdf_clock',
@@ -154,21 +154,21 @@ function App:on_start_game()
 end
 
 function App:on_scene_rendered()
-  tdengine.ffi.dn_gpu_begin_render_pass(self.command_buffer, self.render_pass)
-  tdengine.ffi.dn_gpu_set_world_space(self.command_buffer, true)
-  tdengine.ffi.dn_gpu_set_camera(self.command_buffer, tdengine.editor.find('EditorCamera').offset:to_ctype())
-  tdengine.ffi.dn_sdf_renderer_draw(self.sdf_renderer, self.command_buffer)
-  tdengine.ffi.dn_gpu_end_render_pass(self.command_buffer)
-  tdengine.ffi.dn_gpu_command_buffer_submit(self.command_buffer)
+  doublenickel.ffi.dn_gpu_begin_render_pass(self.command_buffer, self.render_pass)
+  doublenickel.ffi.dn_gpu_set_world_space(self.command_buffer, true)
+  doublenickel.ffi.dn_gpu_set_camera(self.command_buffer, doublenickel.editor.find('EditorCamera').offset:to_ctype())
+  doublenickel.ffi.dn_sdf_renderer_draw(self.sdf_renderer, self.command_buffer)
+  doublenickel.ffi.dn_gpu_end_render_pass(self.command_buffer)
+  doublenickel.ffi.dn_gpu_command_buffer_submit(self.command_buffer)
 
-  tdengine.ffi.dn_gpu_render_target_blit(
-    tdengine.asset.find(RenderTarget.Native),
-    tdengine.asset.find(RenderTarget.Upscaled)
+  doublenickel.ffi.dn_gpu_render_target_blit(
+    doublenickel.asset.find(RenderTarget.Native),
+    doublenickel.asset.find(RenderTarget.Upscaled)
   )
 end
 
 function App:on_swapchain_ready()
   imgui.Imgui_Impl_glfw_opengl3:Render()
-  -- tdengine.ffi.render_imgui()
+  -- doublenickel.ffi.render_imgui()
 end
 
