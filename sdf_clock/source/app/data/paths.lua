@@ -37,7 +37,14 @@ return {
         },
         audio = {
           path = 'audio'
-        }
+        },
+        images = {
+          path = 'images',
+          children = {
+            image = '%s'
+          }
+        },
+
       }
     }
   },
