@@ -20,7 +20,4 @@ cl.exe ^
 /link /LIBPATH:"../../thirdparty/doublenickel/external/lib/debug" /DEBUG:FULL /MACHINE:X64 /NOLOGO /SUBSYSTEM:CONSOLE /INCREMENTAL:NO /NOIMPLIB /NOEXP /PDB:.\intermediate\ ^
 "freetype-2.10.4-windows-x64.lib" "glfw-3.3.8-windows-x64.lib" "luajit-2.1.0.3-windows-x64.lib" "steam_api64.lib" "user32.lib" "opengl32.lib" "gdi32.lib" "Shell32.lib" "Kernel32.lib" "Advapi32.lib" "Ole32.lib" "OleAut32.lib" 
 
-@echo off
-if %errorlevel% neq 0 (
-    pause
-)
+pause

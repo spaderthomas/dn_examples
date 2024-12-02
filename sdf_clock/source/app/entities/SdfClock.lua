@@ -1,4 +1,4 @@
-SdfClockBubble = doublenickel.entity.define('SdfClockBubble')
+SdfClockBubble = doublenickel.class.define('SdfClockBubble')
 function SdfClockBubble:init(params)
   self.sdf = SdfCircle:new({
     color = doublenickel.colors.indian_red,
