@@ -23,9 +23,4 @@ cl.exe ^
 @echo off
 if %errorlevel% neq 0 (
     pause
-    exit
 )
-
-.\%project%.exe
-pause
-exit

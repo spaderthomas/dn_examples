@@ -78,7 +78,7 @@ function App:on_init_game()
         },
       }
     }),
-  gpu = GpuConfig:new({
+    gpu = GpuConfig:new({
       shader_path = dn.paths_resolve('shaders'):to_interned(),
       search_paths = {
           dn.paths_resolve('shader_includes'):to_interned()
@@ -104,7 +104,12 @@ function App:on_init_game()
     }),
     steam = SteamConfig:new({
       app_id = 480
-    })
+    }),
+    image = ImageConfig:new({
+      dirs = {
+        dn.paths_resolve('images'):to_interned()
+      },
+    }),
   })
 
   dn.app_configure(dn_config)
