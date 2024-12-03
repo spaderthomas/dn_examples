@@ -1,13 +1,5 @@
 -- First, I'll define enums for most resources in the game. You can refer to things by string constants, but I much prefer
 -- to use enums. There's nothing special about the names of the enums or their values.
-Resolution = doublenickel.enum.define(
-  'Resolution', 
-  {
-    Native = 0,
-    Upscaled = 1
-  }
-)
-
 Shader = doublenickel.enum.define(
   'Shader',
   {

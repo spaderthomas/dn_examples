@@ -1,11 +1,3 @@
-Resolution = doublenickel.enum.define(
-  'Resolution', 
-  {
-    Native = 0,
-    Upscaled = 1
-  }
-)
-
 Shader = doublenickel.enum.define(
   'Shader',
   {
@@ -26,6 +18,18 @@ Buffer = doublenickel.enum.define(
     Lights = 0,
   }
 )
+
+--[===[
+- Get the collider editor working again (draw the grid to the correct framebuffer, draw colliders to the same, make them draggable)
+- Make render targets for the color buffer and normal buffer
+- Render SDF shapes to the color buffer
+- Render SDF shapes to the normal buffer
+- Add a render pass which copies (for instance) the color buffer to a final render target and applies a basic shader (double the red component)
+- Add some C code for a point light, load this header into LuaJIT, and then make an entity that holds this struct
+- Make a GPU buffer which holds an array of lights
+- Change the aforementioned shader to do some debug rendering of the lights
+
+]===]
 
 local App = doublenickel.define_app()
 
@@ -87,8 +91,8 @@ end
 
 function App:on_start_game()
   doublenickel.editor.configure(EditorConfig:new({
-    grid_enabled = false,
-    grid_size = 12,
+    grid_enabled = true,
+    grid_size = 24,
     hide_dialogue_editor = true,
     game_views = {
       GameView:new(
@@ -104,8 +108,6 @@ function App:on_start_game()
     },
     scene = 'default',
     layout = 'default',
-    render_pass = self.render_pass,
-    command_buffer = self.command_buffer
   }))
 end
 
