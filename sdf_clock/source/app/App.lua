@@ -147,7 +147,7 @@ function App:on_init_game()
     }),
   })
 
-  -- With our configuration done, we can call into C++ to initialize the framework. This is the thrust of initialization.
+  -- With our configuration done, we can call into C to initialize the framework. This is the thrust of initialization.
   dn.app_configure(dn_config)
 
 

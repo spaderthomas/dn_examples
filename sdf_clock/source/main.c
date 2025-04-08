@@ -1,5 +1,6 @@
+#define DN_APP
 #define DN_IMPLEMENTATION
-#include "dn.hpp"
+#include "dn.h"
 
 /*
 A doublenickel app only deals in absolute paths. When we initialize the app, we give the framework the paths it needs to build absolute paths:
@@ -12,12 +13,19 @@ With the paths configured, doublenickel knows where to finds its sources to boot
 
 The next file is the main app entry point, App.lua
 */
+
 int main(int num_args, char** args) {
-  dn_app_descriptor_t app = {
-    .install_path = "../../sdf_clock",
-    .engine_path = "../thirdparty/doublenickel",
-    .write_path = "source/app/data",
-    .app_path = "source/app",
-  };
-  dn_main(app);  
+  dn_init((dn_config_t) {
+    .mode = DN_MODE_APP,
+    .path = (dn_path_config_t) {
+      .install = dn_string_literal("../../sdf_clock"),
+      .engine  = dn_string_literal("../../thirdparty/doublenickel"),
+      .write   = dn_string_literal("../../sdf_clock/source/app/data"),
+    },
+    .lua = (dn_lua_config_t) {
+      .scripts = dn_string_literal("../../sdf_clock/source/app")
+    },
+  });
+
+  return dn_main();  
 }
