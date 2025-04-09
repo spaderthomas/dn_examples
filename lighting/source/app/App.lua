@@ -46,12 +46,12 @@ function App:on_init_game()
         doublenickel.enums.WindowFlags.Windowed,
         doublenickel.enums.WindowFlags.Border
       ),
-      icon = dn.paths_resolve_format('dn_image', 'logo/icon.png'):to_interned(),
+      icon = dn.paths_resolve_format('dn_image', 'logo/icon.png'),
     }),
     gpu = GpuConfig:new({
-      shader_path = dn.paths_resolve('shaders'):to_interned(),
+      shader_path = dn.paths_resolve('shaders'),
       search_paths = {
-          dn.paths_resolve('shader_includes'):to_interned()
+          dn.paths_resolve('shader_includes')
       },
       shaders = {
       },

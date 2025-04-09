@@ -73,7 +73,7 @@ function App:on_init_game()
         doublenickel.enums.WindowFlags.Windowed,
         doublenickel.enums.WindowFlags.Border
       ),
-      icon = dn.paths_resolve_format('dn_image', 'logo/icon.png'):to_interned(),
+      icon = dn.paths_resolve_format('dn_image', 'logo/icon.png'),
     }),
 
     -- AUDIO
@@ -82,7 +82,7 @@ function App:on_init_game()
     -- them into memory.
     audio = AudioConfig:new({
       dirs = {
-        dn.paths_resolve('audio'):to_interned()
+        dn.paths_resolve('audio')
       },
     }),
 
@@ -93,7 +93,7 @@ function App:on_init_game()
       fonts = {
         {
           id = Font.Tiny5,
-          file_path = dn.paths_resolve_format('font', 'Tiny5-Regular.ttf'):to_interned(),
+          file_path = dn.paths_resolve_format('font', 'Tiny5-Regular.ttf'),
           sizes = { 16, 24, 32 },
           imgui = false
         },
@@ -106,16 +106,16 @@ function App:on_init_game()
     -- isn't used to locate shaders (since, remember, everything is an absolute path). Rather, it's a directory for
     -- a file monitor to watch. When files change in this directory, your shaders will be hotloaded.
     gpu = GpuConfig:new({
-      shader_path = dn.paths_resolve('shaders'):to_interned(),
+      shader_path = dn.paths_resolve('shaders'),
       search_paths = {
-          dn.paths_resolve('shader_includes'):to_interned()
+          dn.paths_resolve('shader_includes')
       },
       shaders = {
         {
           name = Shader.Sample,
           kind = GpuShaderKind.Graphics,
-          vertex_shader = dn.paths_resolve_format('shader', 'shader.vertex'):to_interned(),
-          fragment_shader = dn.paths_resolve_format('shader', 'shader.fragment'):to_interned(),
+          vertex_shader = dn.paths_resolve_format('shader', 'shader.vertex'),
+          fragment_shader = dn.paths_resolve_format('shader', 'shader.fragment'),
         }
       },
       render_targets = {
@@ -142,7 +142,7 @@ function App:on_init_game()
     -- A list of directories from which images will be loaded and packed into texture atlases.
     image = ImageConfig:new({
       dirs = {
-        dn.paths_resolve('images'):to_interned()
+        dn.paths_resolve('images')
       },
     }),
   })
