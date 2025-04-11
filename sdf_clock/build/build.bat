@@ -1,6 +1,6 @@
 @echo off
 if not defined DevEnvDir (
-  call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" x86_amd64
+  call "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat" x86_amd64
 )
 
 set "project=SdfClock"
@@ -26,6 +26,7 @@ cl.exe ^
 /TC ^
 /std:c11 ^
 /Zc:wchar_t /Zc:forScope /Zc:inline ^
+/experimental:c11atomics ^
 /EHa ^
 /W3 /wd"4530" /wd"4201" /wd"4577" /wd"4310" /wd"4624" /wd"4099" /wd"4068" /wd"4267" /wd"4244" /wd"4018" ^
 /D "DN_EDITOR" /D "_CRT_SECURE_NO_WARNINGS" /D "_SILENCE_CXX17_ALL_DEPRECATION_WARNINGS" ^
